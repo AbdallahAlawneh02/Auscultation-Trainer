@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart & Lung Auscultation Trainer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🩺</span>
+                    <h2>Auscultation<br>Trainer Pro</h2>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="view-dashboard">
+                    <span class="icon">📊</span> Overview & Flow
+                </button>
+                <button class="nav-btn" data-target="view-instructor">
+                    <span class="icon">⚙️</span> Instructor Setup
+                </button>
+                <div class="nav-divider"></div>
+                <button class="nav-btn" data-target="view-training">
+                    <span class="icon">🧠</span> Practice Mode
+                </button>
+                <div class="nav-divider"></div>
+                <button class="nav-btn" data-target="view-results" id="nav-btn-results">
+                    <span class="icon">📈</span> Exam Results
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn btn-block btn-accent" id="quick-start-exam-btn">
+                    <span class="icon">🚀</span> Launch Exam
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- 1. Dashboard / Overview View -->
+            <section id="view-dashboard" class="view-section active">
+                <header class="view-header">
+                    <h1>System Dashboard</h1>
+                    <p>Welcome to the Heart and Lung Sounds Trainer System.</p>
+                </header>
+                
+                <div class="grid-2">
+                    <div class="card glass-card span-2">
+                        <div class="card-header">
+                            <h3>About the Platform</h3>
+                        </div>
+                        <div class="card-body row-flex">
+                            <div class="flex-1">
+                                <p>This advanced medical simulation platform utilizes an RFID-embedded training vest and a smart stethoscope to train medical students in realistic auscultation. The system evaluates the ability to locate anatomical spots and diagnose normal vs. abnormal sounds.</p>
+                            </div>
+                            <div class="flex-1 stats-row">
+                                <div class="stat-box">
+                                    <span class="stat-num">15</span>
+                                    <span class="stat-label">Spots</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-num">2</span>
+                                    <span class="stat-label">Learning Modes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>How to run an Exam</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="step-list">
+                                <li>
+                                    <div class="step-num">1</div>
+                                    <div class="step-text"><strong>Instructor Setup:</strong> Go to the setup tab and assign 10 points.</div>
+                                </li>
+                                <li>
+                                    <div class="step-num">2</div>
+                                    <div class="step-text"><strong>Launch:</strong> Click "Launch Exam" to lock the interface.</div>
+                                </li>
+                                <li>
+                                    <div class="step-num">3</div>
+                                    <div class="step-text"><strong>Scan:</strong> Student finds the location with the smart stethoscope.</div>
+                                </li>
+                                <li>
+                                    <div class="step-num">4</div>
+                                    <div class="step-text"><strong>Diagnose:</strong> Listen and answer. Auto-scoring occurs instantly.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="card-body flex-col gap-3">
+                            <button class="btn btn-outline btn-block nav-trigger" data-target="view-instructor">Configure New Exam</button>
+                            <button class="btn btn-outline btn-block nav-trigger" data-target="view-training">Open Practice Soundbox</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Instructor Setup View -->
+            <section id="view-instructor" class="view-section">
+                <header class="view-header">
+                    <h1>Instructor Setup</h1>
+                    <p>Configure a 10-question examination profile.</p>
+                </header>
+                
+                <div class="grid-2">
+                    <div class="card span-1">
+                        <div class="card-header">
+                            <h3>Exam Blueprint</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="setup-form" class="setup-form">
+                                <div id="setup-rows" class="setup-grid">
+                                    <!-- Populated dynamically by JS for 10 questions -->
+                                </div>
+                                <div class="form-actions mt-4">
+                                    <button type="button" class="btn btn-primary" id="save-config-btn">Save Blueprint</button>
+                                    <button type="button" class="btn btn-outline" id="randomize-config-btn">Randomize</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card span-1">
+                        <div class="card-header">
+                            <h3>Active Configuration</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-container">
+                                <table class="sleek-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Q</th>
+                                            <th>Target Point</th>
+                                            <th>Condition</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="config-tbody">
+                                        <!-- Populated by JS -->
+                                        <tr><td colspan="3" class="text-center text-muted">No configuration saved yet.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Active Locked Exam View -->
+            <section id="view-exam" class="view-section exam-mode-container">
+                <div class="exam-header-bar">
+                    <div class="exam-title">
+                        <span class="indicator pulse-red"></span> LIVE EXAMINATION IN PROGRESS
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="exit-exam-btn">Exit Exam Early</button>
+                </div>
+                
+                <div class="exam-grid">
+                    <!-- Left Sidebar for Exam info -->
+                    <div class="exam-info-panel">
+                        <div class="progress-container">
+                            <div class="progress-text">
+                                <span>Question</span>
+                                <span id="exam-q-number">1 / 10</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="exam-progress-fill" style="width: 10%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="attempts-card">
+                            <h4>Attempts Remaining</h4>
+                            <div class="dots-left" id="attempts-dots">
+                                <div class="dot active"></div>
+                                <div class="dot active"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="sim-panel mt-auto">
+                            <h4>Stethoscope Simulator</h4>
+                            <p class="text-xs mb-3 text-muted">For testing the UI flow without physical hardware.</p>
+                            <select id="sim-dropdown" class="form-select mb-3"></select>
+                            <button id="sim-scan-btn" class="btn btn-primary btn-block mb-2">Scan Selected Tag</button>
+                            <button id="sim-fail-btn" class="btn btn-outline btn-block text-danger border-danger">Trigger Wrong Scan</button>
+                        </div>
+                    </div>
+
+                    <!-- Main Exam Interaction Area -->
+                    <div class="exam-interaction-panel">
+                        
+                        <!-- Phase 1: Locating -->
+                        <div class="interaction-phase phase-locating active" id="phase-locating">
+                            <h2 class="prompt-title">Find the following point:</h2>
+                            <h1 class="prompt-target text-accent" id="exam-target-name">Aortic Valve</h1>
+                            
+                            <div class="vest-scanner">
+                                <div class="scanner-ring scanner-pulse" id="scanner-visual">
+                                    <span class="scanner-icon">📡</span>
+                                </div>
+                                <p class="scanner-text" id="scanner-feedback">Awaiting RFID Scan...</p>
+                            </div>
+                        </div>
+
+                        <!-- Phase 2: Listening & Answering -->
+                        <div class="interaction-phase phase-listening" id="phase-listening">
+                            <h2 class="prompt-title">Location Verified</h2>
+                            
+                            <div class="audio-player-box">
+                                <button class="play-btn" id="exam-play-btn">▶</button>
+                                <div class="eq-bars" id="exam-eq">
+                                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            
+                            <div class="diagnosis-section">
+                                <h3>Select Diagnosis:</h3>
+                                <div class="answer-grid">
+                                    <button class="ans-btn" id="ans-normal">
+                                        <div class="ans-icon">✓</div>
+                                        Normal Sound
+                                    </button>
+                                    <button class="ans-btn" id="ans-abnormal">
+                                        <div class="ans-icon">⚠</div>
+                                        Abnormal Sound
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Results & Reports View -->
+            <section id="view-results" class="view-section">
+                <header class="view-header">
+                    <h1>Examination Results</h1>
+                    <p>Review the latest student performance data.</p>
+                </header>
+
+                <div class="results-layout" id="results-layout-wrapper">
+                    <div class="no-results-msg card" id="no-results-msg">
+                        <div class="card-body text-center py-5">
+                            <h2>No Exam Completed Yet</h2>
+                            <p class="text-muted">Run a live exam to generate a scoring report.</p>
+                            <button class="btn btn-primary mt-3 nav-trigger" data-target="view-instructor">Go to Setup</button>
+                        </div>
+                    </div>
+                    
+                    <div class="results-content hidden" id="results-content">
+                        <div class="grid-2">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="mb-4">Final Score</h3>
+                                    <div class="score-display">
+                                        <svg viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <path class="circle-fill" id="score-circle-path" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <text x="18" y="20.35" class="percentage" id="final-score-val">0%</text>
+                                        </svg>
+                                    </div>
+                                    <div class="stats-mini-grid mt-4">
+                                        <div><strong class="text-success" id="res-correct">0</strong><br><small>Correct</small></div>
+                                        <div><strong class="text-danger" id="res-incorrect">0</strong><br><small>Incorrect</small></div>
+                                        <div><strong class="text-accent" id="res-accuracy">0%</strong><br><small>Loc Accuracy</small></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Send Official Report</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Student Name / ID</label>
+                                        <input type="text" class="form-input" placeholder="e.g. Jane Doe (ID: 123456)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Instructor Email</label>
+                                        <input type="email" class="form-input" placeholder="instructor@university.edu">
+                                    </div>
+                                    <button class="btn btn-primary btn-block mt-4" id="send-email-btn">Generate & Send Email Report</button>
+                                </div>
+                            </div>
+                            
+                            <div class="card span-2">
+                                <div class="card-header">
+                                    <h3>Question Breakdown (10 Questions)</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="sleek-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Q</th>
+                                                <th>Target</th>
+                                                <th>Attempts used</th>
+                                                <th>Diagnosis Result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="results-tbody">
+                                            <!-- Injected by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Training / Sandbox View -->
+            <section id="view-training" class="view-section">
+                <header class="view-header">
+                    <h1>Auscultation Soundboard</h1>
+                    <p>Explore all 15 auscultation points without limitations.</p>
+                </header>
+
+                <div class="grid-sandbox">
+                    <div class="card list-card">
+                        <div class="card-header">
+                            <h3>Anatomical Points</h3>
+                        </div>
+                        <div class="list-group" id="sandbox-list">
+                            <!-- JS populated -->
+                        </div>
+                    </div>
+                    
+                    <div class="card detail-card">
+                        <div class="card-body text-center" id="sandbox-detail">
+                            <div class="sandbox-illustration">
+                                <span class="illus-icon">🫁</span>
+                            </div>
+                            <h2 id="sb-title">Select a point</h2>
+                            <p class="text-accent font-weight-500 mb-4" id="sb-location">Location</p>
+                            <p id="sb-desc" class="text-muted mb-5">Click on any item in the left menu to view details and hear sample sounds.</p>
+                            
+                            <div class="sandbox-audio-controls hidden" id="sb-controls">
+                                <button class="btn btn-outline-success sb-play" data-type="normal">▶ Normal S/S</button>
+                                <button class="btn btn-outline-danger sb-play" data-type="abnormal">▶ Abnormal S/S</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

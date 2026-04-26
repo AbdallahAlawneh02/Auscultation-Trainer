@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function playSound(pointId, pointName, status) {
-        stopSound();
         // Play sound on the Raspberry Pi server side
         fetch('/play-sound', {
             method: 'POST',

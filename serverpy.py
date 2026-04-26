@@ -247,6 +247,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
         super().do_GET()
 
     def do_POST(self) -> None:
+        global _audio_process
         if self.path == "/scan-rfid":
             content_length = int(self.headers.get("Content-Length", "0"))
             post_data = self.rfile.read(content_length)
@@ -327,7 +328,6 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         if self.path == "/play-sound":
-            global _audio_process
             content_length = int(self.headers.get("Content-Length", "0"))
             post_data = self.rfile.read(content_length)
             try:
@@ -382,7 +382,6 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         if self.path == "/stop-sound":
-            global _audio_process
             try:
                 with _audio_lock:
                     if _audio_process and _audio_process.poll() is None:

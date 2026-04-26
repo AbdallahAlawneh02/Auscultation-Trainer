@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart & Lung Auscultation Trainer</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
+    <link rel="stylesheet" href="style.css?v=rev12fix2">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -37,6 +38,10 @@
             </nav>
             
             <div class="sidebar-footer">
+                <div class="sidebar-status-row">
+                    <span class="status-label">RFID</span>
+                    <span class="status-pill" id="rfid-status-pill">Checking...</span>
+                </div>
                 <button class="btn btn-block btn-accent" id="quick-start-exam-btn">
                     <span class="icon">🚀</span> Launch Exam
                 </button>
@@ -192,14 +197,20 @@
                                 <div class="dot active"></div>
                             </div>
                         </div>
-                        
-                        <div class="sim-panel mt-auto">
-                            <h4>Stethoscope Simulator</h4>
-                            <p class="text-xs mb-3 text-muted">For testing the UI flow without physical hardware.</p>
-                            <select id="sim-dropdown" class="form-select mb-3"></select>
-                            <button id="sim-scan-btn" class="btn btn-primary btn-block mb-2">Scan Selected Tag</button>
-                            <button id="sim-fail-btn" class="btn btn-outline btn-block text-danger border-danger">Trigger Wrong Scan</button>
+
+                        <div class="debug-card">
+                            <h4>RFID Debug</h4>
+                            <div class="debug-grid">
+                                <div><span>Status</span><strong id="debug-server-status">-</strong></div>
+                                <div><span>Phase</span><strong id="debug-phase">-</strong></div>
+                                <div><span>UID</span><strong id="debug-last-uid">-</strong></div>
+                                <div><span>Raw UID</span><strong id="debug-raw-uid">-</strong></div>
+                                <div><span>Matched Alias</span><strong id="debug-match-alias">-</strong></div>
+                                <div><span>Mapped Point</span><strong id="debug-mapped-point">-</strong></div>
+                                <div class="span-2"><span>Note</span><strong id="debug-note">-</strong></div>
+                            </div>
                         </div>
+                        
                     </div>
 
                     <!-- Main Exam Interaction Area -->
@@ -278,8 +289,8 @@
                                         </svg>
                                     </div>
                                     <div class="stats-mini-grid mt-4">
-                                        <div><strong class="text-success" id="res-correct">0</strong><br><small>Correct</small></div>
-                                        <div><strong class="text-danger" id="res-incorrect">0</strong><br><small>Incorrect</small></div>
+                                        <div><strong class="text-success" id="res-correct">0</strong><br><small>Points Earned</small></div>
+                                        <div><strong class="text-danger" id="res-incorrect">0</strong><br><small>Points Missed</small></div>
                                         <div><strong class="text-accent" id="res-accuracy">0%</strong><br><small>Loc Accuracy</small></div>
                                     </div>
                                 </div>
@@ -297,6 +308,10 @@
                                     <div class="form-group">
                                         <label>Instructor Email</label>
                                         <input type="email" class="form-input" placeholder="instructor@university.edu">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Custom Message / Notes</label>
+                                        <textarea class="form-input" id="email-custom-text" rows="3" placeholder="Add any specific notes or feedback here..."></textarea>
                                     </div>
                                     <button class="btn btn-primary btn-block mt-4" id="send-email-btn">Generate & Send Email Report</button>
                                 </div>
@@ -365,6 +380,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=rev12fix2"></script>
 </body>
 </html>
